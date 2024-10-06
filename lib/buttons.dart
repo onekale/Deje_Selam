@@ -4,12 +4,14 @@ class GradientButton extends StatelessWidget {
   final String text;
   final String route;
   final String imageUrl;
+   final int count;
 
   const GradientButton({
     Key? key,
     required this.text,
     required this.route,
     required this.imageUrl,
+    required this.count,
   }) : super(key: key);
 
   @override
@@ -64,6 +66,24 @@ class GradientButton extends StatelessWidget {
                     color: Colors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.normal,
+                  ),
+                ),
+              ),
+            ),
+                        Positioned(
+              bottom: 10, // Adjust as needed
+              left: 140, // Adjust as needed
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Colors.black54,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Text(
+                  '$count', // Display the count
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
                   ),
                 ),
               ),

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "699987766114",
+    "project_id": "deje-selam",
+    "storage_bucket": "deje-selam.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:699987766114:android:b8aa2560fdd5e9af415a3b",
+        "android_client_info": {
+          "package_name": "com.dejeSelam.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtrAmqHaXXTLh8JrKs-uHokvMXK4UqcTg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:699987766114:android:a9a826d9fa22e859415a3b",
+        "android_client_info": {
+          "package_name": "com.example.zehadis"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtrAmqHaXXTLh8JrKs-uHokvMXK4UqcTg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

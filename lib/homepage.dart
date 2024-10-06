@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:zehadis/buttons.dart';
+import 'package:zehadis/commen/addDataForm.dart';
 import 'package:zehadis/my_drawer.dart';
+// import 'package:zehadis/commen/gradientButton.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  Map<String, int> churchCounts = {};
+  bool isLoading = true;
 
   final List<String> names = [
     'Kolefe',
@@ -28,11 +38,9 @@ class HomePage extends StatelessWidget {
     '/lafto',
     '/kirkos',
     '/kality',
-
   ];
 
-    final List<String> imageg = [
-    'assets/home.jpg', 
+  final List<String> imageg = [
     'assets/home.jpg',
     'assets/home.jpg',
     'assets/home.jpg',
@@ -42,8 +50,37 @@ class HomePage extends StatelessWidget {
     'assets/home.jpg',
     'assets/home.jpg',
     'assets/home.jpg',
-
+    'assets/home.jpg',
   ];
+
+   @override
+  void initState() {
+    super.initState();
+    fetchChurchCounts();
+  }
+
+  Future<void> fetchChurchCounts() async {
+    try {
+      for (String subCity in names) {
+        // Fetch the count for each SubCity from Firestore
+        QuerySnapshot snapshot = await FirebaseFirestore.instance
+            .collection('churches')
+            .where('SubCity', isEqualTo: subCity)
+            .get();
+
+        // Update the map with the count
+        setState(() {
+          churchCounts[subCity] = snapshot.docs.length;
+        });
+      }
+    } catch (e) {
+      print("Error fetching church data: $e");
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,59 +114,82 @@ class HomePage extends StatelessWidget {
           ),
           Container(
             decoration: BoxDecoration(
-              color: Colors.grey.withOpacity(0.5), // Black color with 50% opacity
+              color:
+                  Colors.grey.withOpacity(0.5), // Black color with 50% opacity
             ),
             width: double.infinity,
             height: double.infinity,
           ),
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                // Scrollable image at the top
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(20), // Adjust the radius as needed
-                      bottomRight: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                      topLeft: Radius.circular(20),
-                    ),
-                  ),
-                  clipBehavior: Clip.antiAlias, // Ensures the image is clipped within the rounded corners
-                  child: Image.asset(
-                    'assets/Medhanealem.jpg', // Path to your local image
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                    height: 200, // Adjust the height as needed
-                  ),
-                ),
-                // Scrollable list of gradient buttons
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: GridView.builder(
-                    shrinkWrap: true, // Makes sure the GridView takes up only the necessary height
-                    physics: NeverScrollableScrollPhysics(), // Disable GridView scrolling
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, // Two buttons per row
-                      childAspectRatio: 2, // Adjust the aspect ratio to make buttons wider
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 15,
-                    ),
-                    itemCount: names.length, // Number of buttons
-                    itemBuilder: (context, index) {
-                      return GradientButton(
-                        text: names[index],
-                        route: routnames[index],
-                        imageUrl: imageg[index],
+         isLoading
+              ? Center(child: CircularProgressIndicator())
+              : SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      // Scrollable image at the top
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(20),
+                            bottomRight: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                            topLeft: Radius.circular(20),
+                          ),
+                        ),
+                        clipBehavior: Clip.antiAlias,
+                        child: Image.asset(
+                          'assets/Medhanealem.jpg', // Path to your local image
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          height: 200,
+                        ),
+                      ),
+                      // Scrollable list of gradient buttons
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: GridView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2, // Two buttons per row
+                            childAspectRatio: 2,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 15,
+                          ),
+                          itemCount: names.length, // Number of buttons
+                          itemBuilder: (context, index) {
+                            String subCity = names[index];
+                            int count = churchCounts[subCity] ?? 0;
 
-                      );
-                    },
+                            return GradientButton(
+                              text: '$subCity', // Display the SubCity and count
+                              route: routnames[index],
+                              imageUrl: imageg[index],
+                              count: count
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-          ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            builder: (BuildContext context) {
+              return Padding(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom,
+                ),
+                child: AddDataForm(), // Display the form widget
+              );
+            },
+          );
+        },
+        child: Icon(Icons.add),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
