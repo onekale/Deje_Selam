@@ -75,6 +75,14 @@ flutter:
     - assets/MeriFanuel.jpg
     - assets/lalibela2.jpg
     - assets/lalibela3.jpg
+    - assets/yeka.png
+    - assets/lideta.jpg
+    - assets/egziabherAb.jpg
+    - assets/kolfeKeraniyo.jpg
+    - assets/kirkos.png
+    - assets/lafto.jpg
+    - assets/kality.jpg
+    - assets/adisketam.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

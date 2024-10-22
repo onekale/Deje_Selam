@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:zehadis/commen/addDataForm.dart';
 
 class Lemikura extends StatefulWidget {
   @override
@@ -50,7 +49,7 @@ class _LemikuraState extends State<Lemikura> {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
-        backgroundColor: Colors.grey.withOpacity(0.5),
+        backgroundColor: Colors.green,
         elevation: 0,
       ),
       body: Stack(
@@ -130,7 +129,6 @@ class _LemikuraState extends State<Lemikura> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-
                                     GestureDetector(
                                       onTap: () {
                                         _launchURL(
@@ -155,8 +153,7 @@ class _LemikuraState extends State<Lemikura> {
                                               borderRadius:
                                                   BorderRadius.circular(15),
                                             ),
-                                            backgroundColor: Colors
-                                                .green, 
+                                            backgroundColor: Colors.green,
                                             padding: EdgeInsets.only(
                                                 left: 10,
                                                 right: 20,
@@ -196,8 +193,7 @@ class _LemikuraState extends State<Lemikura> {
                                               borderRadius:
                                                   BorderRadius.circular(15),
                                             ),
-                                            backgroundColor: Colors
-                                                .green,
+                                            backgroundColor: Colors.green,
                                             padding: EdgeInsets.only(
                                                 left: 10,
                                                 right: 10,
@@ -209,35 +205,138 @@ class _LemikuraState extends State<Lemikura> {
                                 ),
                                 if (_isExpandedList[index]) ...[
                                   SizedBox(height: 10),
-                                  Text(
-                                    'Name of Ark: ${itemData['NameOfArks'] ?? ''}',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14,
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[
+                                          800], // Background for expanded section
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors
+                                              .black26, // Shadow for depth
+                                          blurRadius: 6,
+                                          offset: Offset(0, 4),
+                                        ),
+                                      ],
+                                    ),
+                                    padding: EdgeInsets.all(16.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Icon(Icons.church,
+                                                color: Colors.green, size: 20),
+                                            SizedBox(width: 8),
+                                            Text(
+                                              'Name of Ark:',
+                                              style: TextStyle(
+                                                color: Color.fromRGBO(255, 183,
+                                                    0, 1), // Gold color
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                            SizedBox(width: 8),
+                                            Expanded(
+                                              child: Text(
+                                                itemData['NameOfArks'] ?? '',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Divider(
+                                            color: Colors
+                                                .white38), // Subtle divider
+                                        Row(
+                                          children: [
+                                            Icon(Icons.school,
+                                                color: Colors.green, size: 20),
+                                            SizedBox(width: 8),
+                                            Text(
+                                              'Sunday School:',
+                                              style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    255, 183, 0, 1),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                            SizedBox(width: 8),
+                                            Expanded(
+                                              child: Text(
+                                                itemData['SundaySchool'] ?? '',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Divider(color: Colors.white38),
+                                        Row(
+                                          children: [
+                                            Icon(Icons.description,
+                                                color: Colors.green, size: 20),
+                                            SizedBox(width: 8),
+                                            Text(
+                                              'Description:',
+                                              style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    255, 183, 0, 1),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                            SizedBox(width: 8),
+                                            Expanded(
+                                              child: Text(
+                                                itemData['description'] ?? '',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Divider(color: Colors.white38),
+                                        Row(
+                                          children: [
+                                            Icon(Icons.date_range,
+                                                color: Colors.green, size: 20),
+                                            SizedBox(width: 8),
+                                            Text(
+                                              'Date:',
+                                              style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    255, 183, 0, 1),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                            SizedBox(width: 8),
+                                            Expanded(
+                                              child: Text(
+                                                itemData['Date'] ?? '',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  Text(
-                                    'SundaySchool: ${itemData['SundaySchool'] ?? ''}',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Description: ${itemData['description'] ?? ''}',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Date: ${itemData['Date'] ?? ''}',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ],
+                                ]
                               ],
                             ),
                           ),
@@ -257,6 +356,7 @@ class _LemikuraState extends State<Lemikura> {
           BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
+        selectedItemColor: Colors.green[700],
       ),
     );
   }

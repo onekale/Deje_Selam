@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: HomePage(), routes: {
+    return MaterialApp(home: CountrySelectionPage(), routes: {
       '/lemi': (context) => Lemikura(), // Use dark theme for black background
       '/bole': (context) => bole(),
       '/yeka': (context) => Yeka(),

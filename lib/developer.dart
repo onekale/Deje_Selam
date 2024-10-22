@@ -43,10 +43,10 @@ class Developer extends StatelessWidget {
                 //profile pic
                 Container(
                   decoration: BoxDecoration(
-                      color: Color.fromRGBO(26, 46, 73, 1),
+                      color: Colors.green,
                       borderRadius: BorderRadius.circular(24)),
                   padding: const EdgeInsets.all(25),
-                  child: const Icon(Icons.person, size: 64, color: Colors.grey),
+                  child: const Icon(Icons.person, size: 64, color: Color.fromARGB(255, 255, 255, 255)),
                 ),
 
                 const SizedBox(
