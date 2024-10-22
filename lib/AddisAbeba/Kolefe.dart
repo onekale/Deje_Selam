@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zehadis/commen/addDataForm.dart';
 
-class Lemikura extends StatefulWidget {
+class Kolefe extends StatefulWidget {
   @override
-  _LemikuraState createState() => _LemikuraState();
+  _kolefeState createState() => _kolefeState();
 }
 
-class _LemikuraState extends State<Lemikura> {
+class _kolefeState extends State<Kolefe> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   List<DocumentSnapshot> items = [];
   List<bool> _isExpandedList = [];
@@ -21,10 +21,7 @@ class _LemikuraState extends State<Lemikura> {
 
   // Fetch data from Firebase Firestore
   void fetchItemsFromFirebase() async {
-    QuerySnapshot snapshot = await _firestore
-        .collection('churches')
-        .where('SubCity', isEqualTo: 'Lemi Kura')
-        .get();
+    QuerySnapshot snapshot = await _firestore.collection('churches').where('SubCity', isEqualTo: 'Kolefe').get();
     setState(() {
       items = snapshot.docs;
       _isExpandedList = List.generate(items.length, (index) => false);
@@ -100,13 +97,13 @@ class _LemikuraState extends State<Lemikura> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(11.0),
+                            padding: const EdgeInsets.all(13.0),
                             child: Center(
                               child: Text(
                                 itemData['title'] ?? '',
                                 style: TextStyle(
-                                  color: Color.fromRGBO(255, 183, 0, 1),
-                                  fontSize: 23,
+                                  color: Color.fromRGBO(0, 255, 240, 1),
+                                  fontSize: 21,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -121,91 +118,42 @@ class _LemikuraState extends State<Lemikura> {
                                     itemData['Name'] ?? '',
                                     style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 20,
+                                      fontSize: 16,
                                     ),
                                   ),
                                 ),
                                 SizedBox(height: 10),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-
-                                    GestureDetector(
-                                      onTap: () {
-                                        _launchURL(
-                                            itemData['googleMapUrl'] ?? '');
-                                      },
-                                      child: ElevatedButton.icon(
-                                        onPressed: () {
-                                          _launchURL(
-                                              itemData['googleMapUrl'] ?? '');
-                                        },
-                                        icon: Icon(Icons.location_on,
-                                            color: Colors.white),
-                                        label: Text(
-                                          'View',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        style: ElevatedButton.styleFrom(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                            ),
-                                            backgroundColor: Colors
-                                                .green, 
-                                            padding: EdgeInsets.only(
-                                                left: 10,
-                                                right: 20,
-                                                top: 7,
-                                                bottom: 7)),
-                                      ),
+                                GestureDetector(
+                                  onTap: () {
+                                    _launchURL(itemData['googleMapUrl'] ?? '');
+                                  },
+                                  child: Text(
+                                    'View on Google Maps',
+                                    style: TextStyle(
+                                      color: Colors.blue,
+                                      fontSize: 16,
+                                      decoration: TextDecoration.underline,
                                     ),
-
-                                    SizedBox(height: 10),
-
-                                    // "More Info" or "Show Less" button
-                                    GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          _isExpandedList[index] =
-                                              !_isExpandedList[index];
-                                        });
-                                      },
-                                      child: ElevatedButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            _isExpandedList[index] =
-                                                !_isExpandedList[index];
-                                          });
-                                        },
-                                        child: Text(
-                                          _isExpandedList[index]
-                                              ? 'Show Less'
-                                              : 'More Info',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        style: ElevatedButton.styleFrom(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                            ),
-                                            backgroundColor: Colors
-                                                .green,
-                                            padding: EdgeInsets.only(
-                                                left: 10,
-                                                right: 10,
-                                                top: 7,
-                                                bottom: 7)),
-                                      ),
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _isExpandedList[index] =
+                                          !_isExpandedList[index];
+                                    });
+                                  },
+                                  child: Text(
+                                    _isExpandedList[index]
+                                        ? 'Show Less'
+                                        : 'More Info',
+                                    style: TextStyle(
+                                      color: Colors.blue,
+                                      fontSize: 16,
+                                      decoration: TextDecoration.underline,
                                     ),
-                                  ],
+                                  ),
                                 ),
                                 if (_isExpandedList[index]) ...[
                                   SizedBox(height: 10),
@@ -223,7 +171,7 @@ class _LemikuraState extends State<Lemikura> {
                                       fontSize: 14,
                                     ),
                                   ),
-                                  Text(
+                                   Text(
                                     'Description: ${itemData['description'] ?? ''}',
                                     style: TextStyle(
                                       color: Colors.white,

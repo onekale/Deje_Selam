@@ -24,8 +24,9 @@ class _HomePageState extends State<HomePage> {
     'Guleli',
     'Lafto',
     'Kirkos',
-    'Kality'
+    'Kality',
   ];
+
 
   final List<String> routnames = [
     '/kolefe',
@@ -53,11 +54,19 @@ class _HomePageState extends State<HomePage> {
     'assets/home.jpg',
   ];
 
-   @override
+  @override
   void initState() {
     super.initState();
     fetchChurchCounts();
   }
+
+  int _selectedIndex = 0;
+
+void _onItemTapped(int index) {
+  setState(() {
+    _selectedIndex = index;
+  });
+}
 
   Future<void> fetchChurchCounts() async {
     try {
@@ -92,7 +101,7 @@ class _HomePageState extends State<HomePage> {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
-        backgroundColor: Colors.grey.withOpacity(0.5),
+        backgroundColor: Colors.green,
         elevation: 0,
         // leading: IconButton(
         //   onPressed: () => {},
@@ -120,7 +129,7 @@ class _HomePageState extends State<HomePage> {
             width: double.infinity,
             height: double.infinity,
           ),
-         isLoading
+          isLoading
               ? Center(child: CircularProgressIndicator())
               : SingleChildScrollView(
                   child: Column(
@@ -131,8 +140,8 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(20),
                             bottomRight: Radius.circular(20),
-                            topRight: Radius.circular(20),
-                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(0),
+                            topLeft: Radius.circular(0),
                           ),
                         ),
                         clipBehavior: Clip.antiAlias,
@@ -149,7 +158,8 @@ class _HomePageState extends State<HomePage> {
                         child: GridView.builder(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2, // Two buttons per row
                             childAspectRatio: 2,
                             crossAxisSpacing: 10,
@@ -161,11 +171,11 @@ class _HomePageState extends State<HomePage> {
                             int count = churchCounts[subCity] ?? 0;
 
                             return GradientButton(
-                              text: '$subCity', // Display the SubCity and count
-                              route: routnames[index],
-                              imageUrl: imageg[index],
-                              count: count
-                            );
+                                text:
+                                    '$subCity', // Display the SubCity and count
+                                route: routnames[index],
+                                imageUrl: imageg[index],
+                                count: count);
                           },
                         ),
                       ),
@@ -175,6 +185,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.green,
         onPressed: () {
           showModalBottomSheet(
             context: context,
@@ -197,6 +208,9 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
           BottomNavigationBarItem(icon: Icon(Icons.info), label: 'Statics'),
         ],
+        selectedItemColor: Colors.green,
+        currentIndex:  _selectedIndex,
+        onTap: _onItemTapped,
       ),
     );
   }
